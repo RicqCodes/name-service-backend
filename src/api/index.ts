@@ -1,10 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
-import serverless from "serverless-http";
-
 import cors from "cors";
 import "dotenv/config";
-import metadataRoutes from "../.././src/metadataRoutes";
+import metadataRoutes from ".././metadataRoutes";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -51,16 +49,14 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-// const server = app.listen(port, () => {
-//   console.log(`Express app listening at http://localhost:${port}`);
-// });
+const server = app.listen(port, () => {
+  console.log(`Express app listening at http://localhost:${port}`);
+});
 
-// process.on("unhandledRejection", (err: any) => {
-//   console.log(err.name, err.message);
-//   console.log("UNHANDLED REJECTION!, SHUTTING DOWN");
-//   server.close(() => {
-//     process.exit(1);
-//   });
-// });
-
-export const handler = serverless(app);
+process.on("unhandledRejection", (err: any) => {
+  console.log(err.name, err.message);
+  console.log("UNHANDLED REJECTION!, SHUTTING DOWN");
+  server.close(() => {
+    process.exit(1);
+  });
+});
