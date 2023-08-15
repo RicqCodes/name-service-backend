@@ -5,8 +5,6 @@ import "dotenv/config";
 import metadataRoutes from "../src/metadataRoutes";
 import bodyParser from "body-parser";
 
-import serverless from "serverless-http";
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
@@ -25,15 +23,15 @@ mongoose
   .then(() => {
     console.log("Mongodb Connection successful");
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.log("Mongo connection error ", err);
   });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 app.use("/api", metadataRoutes);
 
-app.all("*", (req, res, next) => {
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new Error(`Can't find ${req.originalUrl} on this server`));
 });
 
@@ -51,16 +49,16 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-// const server = app.listen(port, () => {
-//   console.log(`Express app listening at http://localhost:${port}`);
-// });
+const server = app.listen(port, () => {
+  console.log(`Express app listening at http://localhost:${port}`);
+});
 
-// process.on("unhandledRejection", (err: any) => {
-//   console.log(err.name, err.message);
-//   console.log("UNHANDLED REJECTION!, SHUTTING DOWN");
-//   server.close(() => {
-//     process.exit(1);
-//   });
-// });
+process.on("unhandledRejection", (err: any) => {
+  console.log(err.name, err.message);
+  console.log("UNHANDLED REJECTION!, SHUTTING DOWN");
+  server.close(() => {
+    process.exit(1);
+  });
+});
 
-export default serverless(app);
+// export default serverless(app);
