@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/api",
-    "build": "node build src/api",
+    "start": "ts-node-esm src/api.ts",
+    "build": "ts-node-esm build src/api.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

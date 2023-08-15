@@ -5,7 +5,8 @@
     "outDir": "serve",
     "strict": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "lib": ["ES2021"]
-  },
-  "include": ["src", "functions/api.ts"]
+  }
+  // "include": ["src", "functions/api.ts"]
 }
