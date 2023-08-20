@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 import { rateLimit } from "express-rate-limit";
 import cors from "cors";
 import "dotenv/config";
-import metadataRoutes from "./routes/metadataRoutes";
-import domainRoutes from "./routes/domainRoutes";
+import routes from "./routes";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -80,7 +79,7 @@ mongoose
 
 const port = process.env.PORT || 8000;
 
-app.use("/api", metadataRoutes);
+app.use("/api", routes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new Error(`Can't find ${req.originalUrl} on this server`));

@@ -3,6 +3,6 @@ import { createMetadata, getMetadata } from "../controller.ts/metadata";
 
 const router = Router();
 
-router.get("/user-domains/:address/:chainId", getMetadata);
+router.get("/:address/:chainId", getMetadata);
 
 export default router;
