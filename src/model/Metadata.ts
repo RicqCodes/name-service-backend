@@ -20,6 +20,10 @@ const metadataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  external_url: {
+    type: String,
+    required: true,
+  },
 });
 
 export const Metadata = mongoose.model("Metadata", metadataSchema);
