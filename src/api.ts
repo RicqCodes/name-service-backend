@@ -14,6 +14,8 @@ const allowedOrigins = [
   "https://baseid.netlify.app",
   "http://localhost:5173",
   "https://api.opensea.io",
+  "https://testnets-api.opensea.io",
+  "http://localhost:9000",
 ];
 
 // Array of whitelisted URLs
@@ -38,12 +40,14 @@ app.use((req, res, next) => {
       res.setHeader("Access-Control-Allow-Methods", "GET");
       next();
     } else if (
-      (path === "/user-domains" && origin === "https://baseid.netlify.app") ||
+      (path === "/api/user-domains" &&
+        origin === "https://baseid.netlify.app") ||
       path === "http://localhost:5173"
     ) {
       // Allow access to the /user-domains endpoint only for your app
       res.setHeader("Access-Control-Allow-Origin", origin!);
       res.setHeader("Access-Control-Allow-Methods", "GET");
+      next();
     } else {
       // Block access for any other combination
       res.status(403).send("Access denied");
@@ -53,7 +57,6 @@ app.use((req, res, next) => {
     res.status(403).send("Access denied");
   }
 });
-
 // Rate limiting middleware
 app.use((req, res, next) => {
   // Check if the requested URL is in the whitelist
@@ -77,7 +80,7 @@ mongoose
     console.log("Mongo connection error ", err);
   });
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 9000;
 
 app.use("/api", routes);
 
