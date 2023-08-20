@@ -12,7 +12,7 @@ const domainSchema = new mongoose.Schema({
     required: true,
   },
   chainId: {
-    type: Number,
+    type: String,
     required: true,
   },
 });

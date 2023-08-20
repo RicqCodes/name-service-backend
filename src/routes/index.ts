@@ -6,6 +6,6 @@ import domainRoutes from "./domainRoutes";
 const router = Router();
 
 router.use("/walletid", metadataRoutes);
-router.use("/user-domains", metadataRoutes);
+router.use("/user-domains", domainRoutes);
 
 export default router;

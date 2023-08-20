@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const allowedOrigins = [
   "https://baseid.netlify.app",
   "http://localhost:5173",
+  "http://127.0.0.1:5173",
   "https://api.opensea.io",
   "https://testnets-api.opensea.io",
   "http://localhost:9000",
@@ -28,24 +29,24 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 
-// Custom middleware to control access
 app.use((req, res, next) => {
-  const { origin, path } = req.headers;
+  const { origin } = req.headers;
+  const path = req.path; // Correct way to access the URL path
 
   // Check if the origin is allowed and path is allowed
   if (allowedOrigins.includes(origin!)) {
-    if (path === "/api/walletid") {
+    if (path.includes("/api/walletid")) {
       // Allow access to the /metadata endpoint for both
       res.setHeader("Access-Control-Allow-Origin", origin!);
       res.setHeader("Access-Control-Allow-Methods", "GET");
       next();
     } else if (
-      (path === "/api/user-domains" &&
-        origin === "https://baseid.netlify.app") ||
-      path === "http://localhost:5173"
+      path.includes("/api/user-domains") &&
+      (origin === "https://baseid.netlify.app" ||
+        origin === "http://127.0.0.1:5173")
     ) {
       // Allow access to the /user-domains endpoint only for your app
-      res.setHeader("Access-Control-Allow-Origin", origin!);
+      res.setHeader("Access-Control-Allow-Origin", origin);
       res.setHeader("Access-Control-Allow-Methods", "GET");
       next();
     } else {
@@ -57,6 +58,7 @@ app.use((req, res, next) => {
     res.status(403).send("Access denied");
   }
 });
+
 // Rate limiting middleware
 app.use((req, res, next) => {
   // Check if the requested URL is in the whitelist

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { createMetadata, getMetadata } from "../controller.ts/metadata";
+import { getUserDomains } from "../controller.ts/domain";
 
 const router = Router();
 
-router.get("/:address/:chainId", getMetadata);
+router.get("/:address/:chainId", getUserDomains);
 
 export default router;
