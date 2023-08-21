@@ -30,36 +30,36 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const path = req.path; // Correct way to access the URL path
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
+//   const path = req.path; // Correct way to access the URL path
 
-  // Check if the origin is allowed and path is allowed
-  if (allowedOrigins.includes(origin!)) {
-    if (path.includes("/api/walletid")) {
-      // Allow access to the /metadata endpoint for both
-      res.setHeader("Access-Control-Allow-Origin", origin!);
-      res.setHeader("Access-Control-Allow-Methods", "GET");
-      next();
-    } else if (
-      path.includes("/api/user-domains") &&
-      (origin === "https://baseid.netlify.app" ||
-        origin === "http://127.0.0.1:5173" ||
-        origin === "http://192.168.149.171:5173/")
-    ) {
-      // Allow access to the /user-domains endpoint only for your app
-      res.setHeader("Access-Control-Allow-Origin", origin);
-      res.setHeader("Access-Control-Allow-Methods", "GET");
-      next();
-    } else {
-      // Block access for any other combination
-      res.status(403).send("Access denied");
-    }
-  } else {
-    // Block access for non-whitelisted origins
-    res.status(403).send("Access denied");
-  }
-});
+//   // Check if the origin is allowed and path is allowed
+//   if (allowedOrigins.includes(origin!)) {
+//     if (path.includes("/api/walletid")) {
+//       // Allow access to the /metadata endpoint for both
+//       res.setHeader("Access-Control-Allow-Origin", origin!);
+//       res.setHeader("Access-Control-Allow-Methods", "GET");
+//       next();
+//     } else if (
+//       path.includes("/api/user-domains") &&
+//       (origin === "https://baseid.netlify.app" ||
+//         origin === "http://127.0.0.1:5173" ||
+//         origin === "http://192.168.149.171:5173/")
+//     ) {
+//       // Allow access to the /user-domains endpoint only for your app
+//       res.setHeader("Access-Control-Allow-Origin", origin);
+//       res.setHeader("Access-Control-Allow-Methods", "GET");
+//       next();
+//     } else {
+//       // Block access for any other combination
+//       res.status(403).send("Access denied");
+//     }
+//   } else {
+//     // Block access for non-whitelisted origins
+//     res.status(403).send("Access denied");
+//   }
+// });
 
 // Rate limiting middleware
 app.use((req, res, next) => {
