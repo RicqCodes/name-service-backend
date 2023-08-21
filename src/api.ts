@@ -14,7 +14,7 @@ const allowedOrigins = [
   "https://baseid.netlify.app",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "http://192.168.149.171:5173",
+  "http://192.168.149.171:5173/",
   "https://api.opensea.io",
   "https://testnets-api.opensea.io",
   "http://localhost:9000",
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
       path.includes("/api/user-domains") &&
       (origin === "https://baseid.netlify.app" ||
         origin === "http://127.0.0.1:5173" ||
-        origin === "http://192.168.149.171:5173")
+        origin === "http://192.168.149.171:5173/")
     ) {
       // Allow access to the /user-domains endpoint only for your app
       res.setHeader("Access-Control-Allow-Origin", origin);
