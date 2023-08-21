@@ -20,7 +20,11 @@ const allowedOrigins = [
   "http://localhost:9000",
 ];
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Array of whitelisted URLs
 const whitelist = ["/api/v1/metadata/"];
