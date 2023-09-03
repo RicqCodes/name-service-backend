@@ -15,11 +15,7 @@ const allowedOrigins = [
   "https://baseid.netlify.app",
   "http://127.0.0.1:5173",
   "http://172.20.10.6:5173",
-  "http://192.168.149.171:5173/",
-  "https://api.opensea.io",
-  "https://opensea.io",
-  "https://testnets.opensea.io",
-  "https://testnets-api.opensea.io",
+  "http://192.168.149.171:5173",
   "http://localhost:9000",
 ];
 
@@ -45,12 +41,7 @@ app.use((req, res, next) => {
 
   // Check if the origin is allowed and path is allowed
   if (allowedOrigins.includes(origin!)) {
-    if (path.includes("/api/v1/walletid")) {
-      // Allow access to the /metadata endpoint for both
-      res.setHeader("Access-Control-Allow-Origin", origin!);
-      res.setHeader("Access-Control-Allow-Methods", "GET");
-      next();
-    } else if (
+    if (
       path.includes("/api/v1/user-domains") &&
       (origin === "https://baseid.netlify.app" ||
         origin === "https://app.baseId.domains" ||
@@ -66,8 +57,14 @@ app.use((req, res, next) => {
       res.status(403).json({ message: "Access denied" });
     }
   } else {
+    if (path.includes("/api/v1/walletid")) {
+      // Allow access to the /metadata endpoint for both
+      res.setHeader("Access-Control-Allow-Origin", origin!);
+      res.setHeader("Access-Control-Allow-Methods", "GET");
+      next();
+    }
     // Block access for non-whitelisted origins
-    res.status(403).json({ message: "Access denied" });
+    else res.status(403).json({ message: "Access denied" });
   }
 });
 
