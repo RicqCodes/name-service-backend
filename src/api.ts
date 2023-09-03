@@ -43,13 +43,13 @@ app.use((req, res, next) => {
 
   // Check if the origin is allowed and path is allowed
   if (allowedOrigins.includes(origin!)) {
-    if (path.includes("/api/walletid")) {
+    if (path.includes("/api/v1/walletid")) {
       // Allow access to the /metadata endpoint for both
       res.setHeader("Access-Control-Allow-Origin", origin!);
       res.setHeader("Access-Control-Allow-Methods", "GET");
       next();
     } else if (
-      path.includes("/api/user-domains") &&
+      path.includes("/api/v1/user-domains") &&
       (origin === "https://baseid.netlify.app" ||
         origin === "https://app.baseId.domains" ||
         origin === "http://127.0.0.1:5173" ||
@@ -94,7 +94,7 @@ mongoose
 
 const port = process.env.PORT || 9000;
 
-app.use("/api", routes);
+app.use("/api/v1", routes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new Error(`Can't find ${req.originalUrl} on this server`));
