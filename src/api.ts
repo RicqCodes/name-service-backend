@@ -52,8 +52,8 @@ app.use((req, res, next) => {
       path.includes("/api/v1/user-domains") &&
       (origin === "https://baseid.netlify.app" ||
         origin === "https://app.baseId.domains" ||
-        origin === "http://172.20.10.6:5173/" ||
-        origin === "http://192.168.149.171:5173/")
+        origin === "http://172.20.10.6:5173" ||
+        origin === "http://192.168.149.171:5173")
     ) {
       // Allow access to the /user-domains endpoint only for your app
       res.setHeader("Access-Control-Allow-Origin", origin);
