@@ -52,7 +52,7 @@ app.use((req, res, next) => {
       path.includes("/api/v1/user-domains") &&
       (origin === "https://baseid.netlify.app" ||
         origin === "https://app.baseId.domains" ||
-        origin === "http://127.0.0.1:5173" ||
+        origin === "http://192.168.0.235:5173/" ||
         origin === "http://192.168.149.171:5173/")
     ) {
       // Allow access to the /user-domains endpoint only for your app
@@ -61,11 +61,11 @@ app.use((req, res, next) => {
       next();
     } else {
       // Block access for any other combination
-      res.status(403).send("Access denied");
+      res.status(403).json({ message: "Access denied" });
     }
   } else {
     // Block access for non-whitelisted origins
-    res.status(403).send("Access denied");
+    res.status(403).json({ message: "Access denied" });
   }
 });
 
