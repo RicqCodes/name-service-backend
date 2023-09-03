@@ -13,10 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Define an array of allowed origins
 const allowedOrigins = [
   "https://baseid.netlify.app",
-  "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "http://172.20.10.6:5173",
   "http://192.168.149.171:5173/",
   "https://api.opensea.io",
+  "https://opensea.io",
+  "https://testnets.opensea.io",
   "https://testnets-api.opensea.io",
   "http://localhost:9000",
 ];
