@@ -7,8 +7,8 @@ import routes from "./routes";
 import bodyParser from "body-parser";
 
 const app = express();
-app.enable("trust proxy");
 app.use(bodyParser.urlencoded({ extended: false }));
+app.set("trust proxy", 1);
 
 // Define an array of allowed origins
 const allowedOrigins = [
@@ -59,7 +59,7 @@ app.use((req, res, next) => {
   } else {
     if (path.includes("/api/v1/walletid")) {
       // Allow access to the /metadata endpoint for both
-      res.setHeader("Access-Control-Allow-Origin", origin!);
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Methods", "GET");
       next();
     }
